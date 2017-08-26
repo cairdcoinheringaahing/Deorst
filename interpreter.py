@@ -1,7 +1,7 @@
 import custom_types, datetime, itertools, math, random, re, regex, time, sys
 
-SORT_CHARS = 'LMIBHlmibh'
-FILTER_CHARS = 'ABDIJLSabdijls'
+SORT_CHARS = 'LMIBHElmibh'
+FILTER_CHARS = 'ABDEIJLSabdijls'
 BOOLEAN_CHARS = r'''ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'''
 MAPPING_CHARS = 'ABCEHIJLOPQRSabcehijlopqrs'
 CMD_REGEX = r"Kk|(E[^\d ]([\da-f]+)?)|([?SmFvW][^\d]([\da-f]+)?)|([gr].)|([tU]..)|(o.)|('[^']+')|([^\da-f? ]([\da-f]+)?)"

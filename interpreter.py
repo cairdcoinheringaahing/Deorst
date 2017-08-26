@@ -92,6 +92,15 @@ def elementwise(left, right, mode):
         
     return ''.join(map(switch, left, right))
 
+def eval_(value):
+    try:
+        return float(value)
+    except:
+        try:
+            return int(value)
+        except:
+            return str(value)
+
 def hexadecimal(value):
     if isinstance(value, (int, float, bool)):
         return hex(int(value)[2:])
@@ -333,6 +342,7 @@ SORTS = {
     'I':min,
     'B':binary,
     'H':hexadecimal,
+    'E':eval_,
 
 }
 
@@ -341,7 +351,7 @@ MAPPINGS = {
     'a':abs,
     'b':bin_,
     'c':chr,
-    'e':eval,
+    'e':eval_,
     'h':hex_,
     'i':int,
     'j':length,
@@ -417,6 +427,8 @@ EXTENSIONS = {
     'S':lambda i, s: s.push(sorted(s.pop(i))),
     'T':lambda i, s: s.push(str(s.pop(i)).title()),
     'U':lambda i, s: s.push(str(s.pop(i)).upper()),
+    'V':lambda i, s: s.push(eval_(s.pop(i))),
+    'W':lambda i, s: s.push(str(s.pop(i)).swapcase()),
     'Y':lambda i, s: exec(str(s.pop(i))),
     '"':lambda i, s: s.push(str(s.pop(i))),
     '[':lambda i, s: s.push(list(s.pop(i))),

@@ -108,7 +108,7 @@ def length(value):
     try:
         return len(value)
     except:
-        return str(value)
+        return len(str(value))
 
 def print_(*values, sep=' ', end='\n'):
     print(*values, sep=sep, end=str(end), file=open('stdout.txt','a'))

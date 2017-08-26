@@ -182,5 +182,3 @@ class Bool(Comparison, int):
 
 class Float(Comparison, float):
     pass
-
-print(Str('Hello') // 3)

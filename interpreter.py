@@ -238,7 +238,7 @@ COMMANDS = {
     '8':lambda i,s: s.push(8),
     '9':lambda i,s: s.push(9),
     
-    ':':lambda i,s: s.push(s.peek()),
+    ':':lambda i,s: s.push(s.peek(i)),
     ';':lambda i,s: s.push(s.pop(i)),
     '<':lambda i,s: s.push(s.pop(i) < s.pop()),
     '=':lambda i,s: s.push(s.pop(i) == s.pop()),

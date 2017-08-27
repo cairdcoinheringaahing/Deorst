@@ -100,7 +100,10 @@ def eval_(value):
         try:
             return int(value)
         except:
-            return str(value)
+            try:
+                eval(value)
+            except:
+                return str(value)
 
 def hexadecimal(value):
     if isinstance(value, (int, float, bool)):

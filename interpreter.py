@@ -383,6 +383,8 @@ FILTERS = {
     'b':lambda s: list(filter(lambda a: not a, s)),
     'D':lambda s: list(filter(lambda a: a.isdigit(), s)),
     'd':lambda s: list(filter(lambda a: not a.isdigit(), s)),
+    'E':lambda s: list(filter(lambda a: a == s[-1], s)),
+    'e':lambda s: list(filter(lambda a: a != s[-1], s)),
     'I':lambda s: list(filter(lambda a: isinstance(a, int), s)),
     'i':lambda s: list(filter(lambda a: not isinstance(a, int), s)),
     'J':lambda s: list(filter(lambda a: length(a) == s[-1], s)),

@@ -685,7 +685,8 @@ def interpreter(code, input_file, argv, stack, flags):
     if not open('stdout.txt').read():
         if '-s' in flags:
             print_(stack)
-        print_(stack.pop())
+        else:
+            print_(stack.pop())
 
 def run(program, inputs):
     open('stdout.txt','w').close()

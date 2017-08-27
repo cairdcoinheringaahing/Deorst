@@ -422,6 +422,7 @@ EXTENSIONS = {
     'I':lambda i, s: s.push(int(s.pop(i))),
     'J':lambda i, s: s.push(''.join(map(str, s.pop(i)))),
     'L':lambda i, s: s.push(str(s.pop(i)).lower()),
+    'N':lambda i, s: s.push(str(s.pop(i)).count(str(s.pop()))),
     'O':lambda i, s: print_(end=str(s.peek(i))),
     'P':lambda i, s: s.push(nprime(s.pop(i))),
     'R':lambda i, s: s.reverse(),

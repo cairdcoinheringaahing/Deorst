@@ -288,7 +288,7 @@ COMMANDS = {
     'e':lambda i,s: s.push(14),
     'f':lambda i,s: s.push(15),
     'g':lambda i,s: 'Case sensitive regex prefix',
-    'h':lambda i,s: s.push(regex.flatten(s.pop(i))),
+    'h':lambda i,s: s.push(s.pop(i)[0]),
     'i':lambda i,s: s.push(int(s.pop(i))),
     'j':lambda i,s: s.push(chr(s.pop(i))),
     'k':lambda i,s: 'Inverse sort determinate',

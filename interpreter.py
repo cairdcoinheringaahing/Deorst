@@ -381,6 +381,8 @@ FILTERS = {
     'a':lambda s: list(filter(lambda a: not a.isalpha(), s)),
     'B':lambda s: list(filter(lambda a: bool(a), s)),
     'b':lambda s: list(filter(lambda a: not a, s)),
+    'C':lambda s: list(filter(lambda a: a in s[-1], s)),
+    'c':lambda s: list(filter(lambda a: a not in s[-1], s)),
     'D':lambda s: list(filter(lambda a: a.isdigit(), s)),
     'd':lambda s: list(filter(lambda a: not a.isdigit(), s)),
     'E':lambda s: list(filter(lambda a: a == s[-1], s)),

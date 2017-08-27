@@ -169,6 +169,12 @@ class Stack(list):
         self.sort = True
         self.time = time.time()
         
+    def flatten(self):
+        copy = self.copy()
+        copy = regex.flatten(copy)
+        self.clear()
+        self.push(*copy)
+        
     def push(self, *values):
         for v in values:
             self.append(v)
@@ -434,6 +440,7 @@ EXTENSIONS = {
     'Y':lambda i, s: exec(str(s.pop(i))),
     '"':lambda i, s: s.push(str(s.pop(i))),
     '[':lambda i, s: s.push(list(s.pop(i))),
+    ']':lambda i, s: s.flatten(),
     '.':lambda i, s: s.push(list(s.pop(i)).index(s.pop())),
     '}':lambda i, s: repeat(s, s.pop(i)),
     '>':lambda i, s: repeat(s.pop(i), s.pop()),

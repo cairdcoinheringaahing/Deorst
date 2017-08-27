@@ -462,7 +462,21 @@ EXTENSIONS = {
     'x':lambda i, s: s.push(KEYBOARDWL),
     'y':lambda i, s: s.push(VOWELYB),
     'z':lambda i, s: s.push(KEYBOARDML),
-
+    
+    ' ':lambda i, s: s.push(100),
+    '!':lambda i, s: s.push(128),
+    '#':lambda i, s: s.push(256),
+    '$':lambda i, s: s.push(512),
+    '%':lambda i, s: s.push(1000),
+    '&':lambda i, s: s.push(1024),
+    "'":lambda i, s: s.push(2048),
+    '(':lambda i, s: s.push(4096),
+    ')':lambda i, s: s.push(8192),
+    '*':lambda i, s: s.push(16384),
+    '+':lambda i, s: s.push(32768),
+    ',':lambda i, s: s.push(65536),
+    '-':lambda i, s: s.push(1234567890),
+   
 }
 
 DATETIME = {

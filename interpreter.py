@@ -66,6 +66,7 @@ def divmod_(x, y):
     return [x//y, x%y]
 
 def elementwise(left, right, mode):
+    left, right = str(left), str(right)
     length = min(len(left), len(right))
     left = left[:length]
     right = right[:length]

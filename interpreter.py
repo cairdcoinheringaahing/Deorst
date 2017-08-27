@@ -627,8 +627,8 @@ def execute_line(code, stack, inputs):
     return stack
 
 def interpreter(code, input_file, argv, stack, flags):
-    STDIN = list(map(str.strip, open(input_file, 'r').readlines()))
-    argv = list(map(eval, argv))
+    STDIN = list(map(eval_, map(str.strip,open(input_file, 'r').readlines())))
+    argv = list(map(eval_, argv))
     
     stack.init()
     stack.push(*STDIN)
@@ -672,14 +672,11 @@ def interpreter(code, input_file, argv, stack, flags):
             print_(stack)
         print_(stack.pop())
 
-def run(program, inputs, store=False):
+def run(program, inputs):
     open('stdout.txt','w').close()
     flags = list(filter(lambda a: str(a)[0] == '-', inputs))
-    inputs = list(filter(lambda a: a not in flags))
+    inputs = list(filter(lambda a: a not in flags, inputs))
     interpreter(program.strip(), 'stdin.txt', inputs, Stack(), flags)
-    
-    if store:
-        return open('stdout.txt').read()
 
 if __name__ == '__main__':
 

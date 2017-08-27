@@ -436,6 +436,7 @@ EXTENSIONS = {
     '.':lambda i, s: s.push(list(s.pop(i)).index(s.pop())),
     '}':lambda i, s: repeat(s, s.pop(i)),
     '>':lambda i, s: repeat(s.pop(i), s.pop()),
+    '_':lambda i, s: print_(s),
     
     'a':lambda i, s: s.push(PRINTABLE),
     'b':lambda i, s: s.push(ALPHABETU),

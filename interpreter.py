@@ -424,6 +424,7 @@ REGEX = {
 
 EXTENSIONS = {
     
+    'A':lambda i, s: s.push(s[i]),
     'C':lambda i, s: s.clear(),
     'D':lambda i, s: s.push(divisors(s.pop(i))),
     'E':lambda i, s: s.push(enumerate(s.pop(i))),

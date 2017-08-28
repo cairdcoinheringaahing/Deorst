@@ -1,9 +1,5 @@
 import custom_types, datetime, itertools, math, random, re, regex, time, sys
 
-SORT_CHARS = 'LMIBHElmibh'
-FILTER_CHARS = 'ABDEIJLSabdijls'
-BOOLEAN_CHARS = r'''ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'''
-MAPPING_CHARS = 'ABCEHIJLOPQRSabcehijlopqrs'
 CMD_REGEX = r"Kk|(E[^\d ]([\da-f]+)?)|([?SmFvW][^\d]([\da-f]+)?)|([gr].)|([tU]..)|(o.)|('[^']+')|([^\da-f? ]([\da-f]+)?)"
 NESTED = [1, 3, 9]
 
@@ -579,8 +575,6 @@ def execute_line(code, stack, inputs):
             
         elif char[0] == '?':
             cmd = char[1]
-            if cmd not in BOOLEAN_CHARS:
-                continue
             command = BOOLEANS[cmd.upper()]
             result = command(stack, arg(char[2:]))
             if cmd.islower():
@@ -589,14 +583,10 @@ def execute_line(code, stack, inputs):
             
         elif char[0] == 'S':
             cmd = char[1]
-            if cmd not in SORT_CHARS:
-                continue
             stack = Stack(stack_sort(stack, cmd))
             
         elif char[0] == 'm':
             cmd = char[1]
-            if cmd not in MAPPING_CHARS:
-                continue
             command = MAPPINGS[cmd.lower()]
             for i in range(len(stack)):
                 if cmd.islower():
@@ -606,8 +596,6 @@ def execute_line(code, stack, inputs):
                 
         elif char[0] == 'F':
             cmd = char[1]
-            if cmd not in FILTER_CHARS:
-                continue
             command = FILTERS[cmd]
             stack = Stack(command(stack))
 

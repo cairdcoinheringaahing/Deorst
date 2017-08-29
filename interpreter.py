@@ -97,7 +97,7 @@ def eval_(value):
             return int(value)
         except:
             try:
-                eval(value)
+                return eval(value)
             except:
                 return str(value)
 

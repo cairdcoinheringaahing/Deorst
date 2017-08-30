@@ -565,7 +565,7 @@ def arg(arg_value):
     try:return -int(arg_value, 16)
     except:return -1
 
-def execute_line(code, stack, inputs):
+def execute_line(code, stack, inputs, index=-1):
     for char in code:
 
         if char == 'K':
@@ -588,7 +588,10 @@ def execute_line(code, stack, inputs):
         elif char[0] == '?':
             cmd = char[1]
             command = BOOLEANS[cmd.upper()]
-            result = command(stack, arg(char[2:]))
+            if index != -1:
+                result = command(stack, -index)
+            else:
+                result = command(stack, arg(char[2:]))
             if cmd.islower():
                 result = not result
             stack.push(result)
@@ -621,7 +624,10 @@ def execute_line(code, stack, inputs):
 
         elif char[0] == 'E':
             ext = EXTENSIONS[char[1]]
-            argument = arg(char[2:])
+            if index != -1:
+                argument = -index
+            else:
+                argument = arg(char[2:])
             ext(argument, stack)
 
         elif char[0] == 'W':
@@ -650,10 +656,13 @@ def execute_line(code, stack, inputs):
             else:
                 cmd = char[0]
                 command = COMMANDS[cmd]
-                if len(char) == 1:
-                    command(-1, stack)
+                if index != -1:
+                    command(-index, stack)
                 else:
-                    command(arg(char[1:]), stack)
+                    if len(char) == 1:
+                      command(-1, stack)
+                    else:
+                        command(arg(char[1:]), stack)
                 
     return stack
 
@@ -687,9 +696,8 @@ def interpreter(code, input_file, argv, stack, flags):
                 stack = execute_line(line[1:], stack, inputs)
 
         elif line[0] == '$':
-            for c in stack:
-                stack.push(c)
-                stack = execute_line(line[1:], stack, inputs)
+            for index in range(len(stack)):
+                
 
         else:
             stack = execute_line(line, stack, inputs)

@@ -116,6 +116,12 @@ def indexes(var, val):
     zipped = zip(str(var), str(val))
     return list(map(lambda a: int(a[0] == a[1]), zipped))
 
+def isprime(val):
+    for i in range(2,val):
+        if val % i == 0:
+            return False
+    return True
+
 def length(value):
     try:
         return len(value)
@@ -392,13 +398,14 @@ FILTERS = {
     'j':lambda s: list(filter(lambda a: length(a) != s[-1], s)),
     'L':lambda s: list(filter(lambda a: isinstance(a, list), s)),
     'l':lambda s: list(filter(lambda a: not isinstance(a, list), s)),
-    'S':lambda s: list(filter(lambda a: isinstance(a, str), s)),
-    's':lambda s: list(filter(lambda a: not isinstance(a, str), s)),
-    'P':lambda s: list(filter(lambda a: a == a[::-1], s)),
-    'p':lambda s: list(filter(lambda a: a != a[::-1], s)),
     'O':lambda s: list(filter(lambda a: list(a) in [sorted(a), sorted(a,reverse=True)], s)),
     'o':lambda s: list(filter(lambda a: list(a) not in [sorted(a), sorted(a,reverse=True)], s)),
-    
+    'P':lambda s: list(filter(lambda a: isprime(a), s)),
+    'p':lambda s: list(filter(lambda a: not isprime(a), s)),
+    'S':lambda s: list(filter(lambda a: isinstance(a, str), s)),
+    's':lambda s: list(filter(lambda a: not isinstance(a, str), s)),
+    'V':lambda s: list(filter(lambda a: a == a[::-1], s)),
+    'v':lambda s: list(filter(lambda a: a != a[::-1], s)),
 }
 
 REGEX = {

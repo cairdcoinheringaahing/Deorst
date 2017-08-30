@@ -115,6 +115,16 @@ def eval_(value):
                 return eval(value)
             except:
                 return str(value)
+            
+def fib_helper(a=[1,1]):
+    a[:]=a[1],sum(a)
+    return a
+
+def fib(n):
+    if instance(n, list):
+        return list(map(fib, n))
+    for _ in range(n):a=f()[1]
+    return a
            
 def flatten(array):
     array = str(array)
@@ -135,13 +145,17 @@ def indexes(var, val):
     zipped = zip(str(var), str(val))
     return list(map(lambda a: int(a[0] == a[1]), zipped))
 
+def isfib(n):
+    f=lambda n, a=1, b=1: n>a and f(n, b, a+b) or n==a
+    return f(n)
+
 def isprime(val):
     if isinstance(val, list):
         return list(map(isprime, val))
     for i in range(2,val):
         if val % i == 0:
             return False
-    return True
+    return i > 1
 
 def length(value):
     try:
@@ -209,6 +223,12 @@ class Stack(list):
         copy = set_(copy)
         self.clear()
         self.push(*copy)
+        
+    def head(self, index):
+        self = self[:index]
+        
+    def tail(self, index):
+        self = self[index:]
         
     def push(self, *values):
         for v in values:
@@ -329,7 +349,7 @@ COMMANDS = {
     'e':lambda i,s: s.push(14),
     'f':lambda i,s: s.push(15),
     'g':lambda i,s: 'Case sensitive regex prefix',
-    'h':lambda i,s: None,
+    'h':lambda i,s: s.head(i),
     'i':lambda i,s: s.push(int(s.pop(i))),
     'j':lambda i,s: s.push(chr(s.pop(i))),
     'k':lambda i,s: 'Inverse sort determinate',
@@ -342,7 +362,7 @@ COMMANDS = {
     'r':lambda i,s: 'Case insensitive regex prefix',
     's':lambda i,s: s.push(shuffle(s.pop(i))),
     't':lambda i,s: 'Two character literal',
-    'u':lambda i,s: s.push(*s.pop(i)),
+    'u':lambda i,s: s.tail(i),
     'v':lambda i,s: 'Vectorise prefix',
     'w':lambda i,s: s[-1].pop(i),
     'x':lambda i,s: s.push(random.randint(s.pop(i), s.pop())),
@@ -471,7 +491,6 @@ EXTENSIONS = {
     'L':lambda i, s: s.push(str(s.pop(i)).lower()),
     'N':lambda i, s: s.push(str(s.pop(i)).count(str(s.pop()))),
     'O':lambda i, s: print_(end=str(s.peek(i))),
-    'P':lambda i, s: s.push(nprime(s.pop(i))),
     'Q':lambda i, s: s.deduplicate(),
     'R':lambda i, s: s.reverse(),
     'S':lambda i, s: s.push(sorted(s.pop(i))),

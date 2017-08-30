@@ -204,6 +204,12 @@ class Stack(list):
         self.clear()
         self.push(*copy)
         
+    def deduplicate(self):
+        copy = self.copy()
+        copy = set_(copy)
+        self.clear()
+        self.push(*copy)
+        
     def push(self, *values):
         for v in values:
             self.append(v)
@@ -466,6 +472,7 @@ EXTENSIONS = {
     'N':lambda i, s: s.push(str(s.pop(i)).count(str(s.pop()))),
     'O':lambda i, s: print_(end=str(s.peek(i))),
     'P':lambda i, s: s.push(nprime(s.pop(i))),
+    'Q':lambda i, s: s.deduplicate(),
     'R':lambda i, s: s.reverse(),
     'S':lambda i, s: s.push(sorted(s.pop(i))),
     'T':lambda i, s: s.push(str(s.pop(i)).title()),

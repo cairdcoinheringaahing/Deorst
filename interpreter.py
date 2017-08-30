@@ -36,6 +36,8 @@ def binary(value):
     return ''.join(map(lambda c: bin(ord(c))[2:], value))
 
 def bin_(value):
+    if isinstance(value, list):
+        return list(map(bin_, value))
     return bin(value)[2:]
 
 def choice(value):
@@ -59,9 +61,17 @@ def deltas(value):
     return final
 
 def divisors(x):
+    if isinstance(x, list):
+        return list(map(divisors, x))
     return list(filter(lambda a: int(x) % a == 0, range(1,int(x)+1)))
 
 def divmod_(x, y):
+    if isinstance(x, list):
+        return list(map(lambda a: divmod_(a, y), x))
+    if isinstance(y, list):
+        return list(map(lambda a: divmod_(x, a), y))
+    if isinstance(x, list) and isinstance(y, list):
+        return list(map(divmod_, x, y))
     return [x//y, x%y]
 
 def elementwise(left, right, mode):
@@ -93,6 +103,8 @@ def elementwise(left, right, mode):
     return ''.join(map(switch, left, right))
 
 def eval_(value):
+    if isinstance(value, list):
+        return list(map(eval_, value))
     try:
         return float(value)
     except:
@@ -103,6 +115,11 @@ def eval_(value):
                 return eval(value)
             except:
                 return str(value)
+           
+def flatten(array):
+    array = str(array)
+    array = '['+array.replace('[','').replace(']','')+']'
+    return eval(array)
 
 def hexadecimal(value):
     if isinstance(value, (int, float, bool)):
@@ -110,6 +127,8 @@ def hexadecimal(value):
     return ''.join(map(lambda c: hex(ord(c))[2:], value))
 
 def hex_(value):
+    if isinstance(value, list):
+        return list(map(hex_, value))
     return hex(value)[2:]
 
 def indexes(var, val):
@@ -117,6 +136,8 @@ def indexes(var, val):
     return list(map(lambda a: int(a[0] == a[1]), zipped))
 
 def isprime(val):
+    if isinstance(val, list):
+        return list(map(isprime, val))
     for i in range(2,val):
         if val % i == 0:
             return False
@@ -179,7 +200,7 @@ class Stack(list):
         
     def flatten(self):
         copy = self.copy()
-        copy = regex.flatten(copy)
+        copy = flatten(copy)
         self.clear()
         self.push(*copy)
         
@@ -290,7 +311,7 @@ COMMANDS = {
 
     '[':lambda i,s: s.push([s.pop(i)]),
     '\\':lambda i,s: s.push(s.pop(i)//1),
-    ']':lambda i,s: s.push(regex.flatten(s.pop(i))),
+    ']':lambda i,s: s.push(flatten(s.pop(i))),
     '^':lambda i,s: s.push(s.pop(i) ^ s.pop()),
     '_':lambda i,s: print_(*s),
     '`':lambda i,s: s.push(s.pop(i).split(s.pop())),
@@ -420,15 +441,15 @@ REGEX = {
     's':(4, lambda p, s, r, c: regex.sub(p, s, r, c)),
     'u':(4, lambda p, s, r, c: regex.unsub(p, s, r, c)),
 
-    'C':(3, lambda p, s, c: regex.flatten(regex.contains(p, s, c))),
-    'F':(3, lambda p, s, c: regex.flatten(regex.findall(p, s, c))),
-    'G':(3, lambda p, s, c: regex.flatten(regex.group(p, s, c))),
-    'M':(3, lambda p, s, c: regex.flatten(regex.match(p, s, c))),
-    'B':(3, lambda p, s, c: regex.flatten(regex.start(p, s, c))),
-    'P':(3, lambda p, s, c: regex.flatten(regex.split(p, s, c))),
-    'O':(3, lambda p, s, c: regex.flatten(regex.findor(p, s, c))),
-    'S':(4, lambda p, s, r, c: regex.flatten(regex.sub(p, s, r, c))),
-    'U':(4, lambda p, s, r, c: regex.flatten(regex.unsub(p, s, r, c))),
+    'C':(3, lambda p, s, c: flatten(regex.contains(p, s, c))),
+    'F':(3, lambda p, s, c: flatten(regex.findall(p, s, c))),
+    'G':(3, lambda p, s, c: flatten(regex.group(p, s, c))),
+    'M':(3, lambda p, s, c: flatten(regex.match(p, s, c))),
+    'B':(3, lambda p, s, c: flatten(regex.start(p, s, c))),
+    'P':(3, lambda p, s, c: flatten(regex.split(p, s, c))),
+    'O':(3, lambda p, s, c: flatten(regex.findor(p, s, c))),
+    'S':(4, lambda p, s, r, c: flatten(regex.sub(p, s, r, c))),
+    'U':(4, lambda p, s, r, c: flatten(regex.unsub(p, s, r, c))),
     
 }
 
@@ -518,20 +539,6 @@ DATETIME = {
     'W':lambda s: time.sleep(s.pop()),
 
 }
-
-def flatten_list(array):
-
-    class Flattener(list):
-        def add(self, *values):
-            for v in values:
-                if type(v) == list:
-                    self.add(*v)
-                else:
-                    self.append(v)
-
-    flat = Flattener()
-    flat.add(*array)
-    return flat
 
 def stack_sort(stack, command):
     if command.isupper():

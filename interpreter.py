@@ -59,7 +59,7 @@ def deltas(value):
     return final
 
 def divisors(x):
-    return list(filter(lambda a: int(x) % a == 0, range(int(x))))
+    return list(filter(lambda a: int(x) % a == 0, range(1,int(x)+1)))
 
 def divmod_(x, y):
     return [x//y, x%y]

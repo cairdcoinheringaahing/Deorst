@@ -696,9 +696,9 @@ def interpreter(code, input_file, argv, stack, flags):
                 stack = execute_line(line[1:], stack, inputs)
 
         elif line[0] == '$':
-            for index in range(len(stack)):
+            for index in range(1, len(stack)+1):
+                execute_line(line[1:], stack, inputs, index)
                 
-
         else:
             stack = execute_line(line, stack, inputs)
 

@@ -229,7 +229,7 @@ COMMANDS = {
     '!':lambda i,s: 'For loop',
     '"':lambda i,s: 'If statement',
     '#':lambda i,s: 'While loop',
-    '$':lambda i,s: 'Foreach loop',
+    '$':lambda i,s: None,
     '%':lambda i,s: s.push(s.pop(i) % s.pop()),
     '&':lambda i,s: s.push(s.pop(i) & s.pop()),
     "'":lambda i,s: 'String terminator',
@@ -565,7 +565,7 @@ def arg(arg_value):
     try:return -int(arg_value, 16)
     except:return -1
 
-def execute_line(code, stack, inputs, index=-1):
+def execute_line(code, stack, inputs):
     for char in code:
 
         if char == 'K':
@@ -624,10 +624,7 @@ def execute_line(code, stack, inputs, index=-1):
 
         elif char[0] == 'E':
             ext = EXTENSIONS[char[1]]
-            if index != -1:
-                argument = -index
-            else:
-                argument = arg(char[2:])
+            argument = arg(char[2:])
             ext(argument, stack)
 
         elif char[0] == 'W':
@@ -656,13 +653,10 @@ def execute_line(code, stack, inputs, index=-1):
             else:
                 cmd = char[0]
                 command = COMMANDS[cmd]
-                if index != -1:
-                    command(-index, stack)
+                if len(char) == 1:
+                  command(-1, stack)
                 else:
-                    if len(char) == 1:
-                      command(-1, stack)
-                    else:
-                        command(arg(char[1:]), stack)
+                    command(arg(char[1:]), stack)
                 
     return stack
 
@@ -694,10 +688,6 @@ def interpreter(code, input_file, argv, stack, flags):
         elif line[0] == '#':
             while stack.peek():
                 stack = execute_line(line[1:], stack, inputs)
-
-        elif line[0] == '$':
-            for index in range(1, len(stack)+1):
-                execute_line(line[1:], stack, inputs, index)
                 
         else:
             stack = execute_line(line, stack, inputs)

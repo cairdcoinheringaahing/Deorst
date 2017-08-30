@@ -671,7 +671,7 @@ def interpreter(code, input_file, argv, stack, flags):
         
         if line[0] == '!':
             x = stack.peek()
-            if type(x) in [int,float,bool]:
+            if isinstance(x, (int, bool, float)):
                 x = abs(int(x))
             else:
                 x = len(x)
@@ -687,11 +687,7 @@ def interpreter(code, input_file, argv, stack, flags):
                 stack = execute_line(line[1:], stack, inputs)
 
         elif line[0] == '$':
-            x = stack.peek()
-            if type(x) in [int,float,bool]:
-                x = range(abs(int(x)))
-
-            for c in x:
+            for c in stack:
                 stack.push(c)
                 stack = execute_line(line[1:], stack, inputs)
 

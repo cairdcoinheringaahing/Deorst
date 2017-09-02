@@ -622,8 +622,8 @@ def execute_line(code, stack, inputs):
         elif char[0] == '?':
             cmd = char[1]
             command = BOOLEANS[cmd.upper()]
-            if index != -1:
-                result = command(stack, -index)
+            if len(char) < 3:
+                result = command(stack, -1)
             else:
                 result = command(stack, arg(char[2:]))
             if cmd.islower():

@@ -150,6 +150,7 @@ def isfib(n):
     return f(n)
 
 def isprime(val):
+    i = 0
     if isinstance(val, list):
         return list(map(isprime, val))
     for i in range(2,val):

@@ -707,6 +707,9 @@ def interpreter(code, input_file, argv, stack, flags):
     
     for line in parser(code, '-c' in flags):
         
+        if not line:
+            continue
+        
         if line[0] == '!':
             x = stack.peek()
             if isinstance(x, (int, bool, float)):

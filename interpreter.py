@@ -483,6 +483,7 @@ REGEX = {
 EXTENSIONS = {
     
     'A':lambda i, s: s.push(s[i]),
+    'B':lambda i, s: s.push(int(s.pop(i), s[-1])),
     'C':lambda i, s: s.clear(),
     'D':lambda i, s: s.push(divisors(s.pop(i))),
     'E':lambda i, s: s.push(enumerate(s.pop(i))),

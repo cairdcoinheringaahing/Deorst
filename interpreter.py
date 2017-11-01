@@ -424,8 +424,8 @@ MAPPINGS = {
     'q':set_,
     'r':reverse,
     's':str,
+    'x':lambda i: int(i, 2),
     'z':sorted,
-    'B':lambda i: int(i, 2),
     
 }
 

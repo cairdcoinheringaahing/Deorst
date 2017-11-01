@@ -425,6 +425,7 @@ MAPPINGS = {
     'r':reverse,
     's':str,
     'z':sorted,
+    'B':lambda i: int(i, 2),
     
 }
 

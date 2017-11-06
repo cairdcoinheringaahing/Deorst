@@ -338,7 +338,7 @@ COMMANDS = {
 
     '[':lambda i,s: s.push([s.pop(i)]),
     '\\':lambda i,s: s.push(s.pop(i)//1),
-    ']':lambda i,s: s.push(flatten(s.pop(i))),
+    ']':lambda i,s: s.flatten(),
     '^':lambda i,s: s.push(s.pop(i) ^ s.pop()),
     '_':lambda i,s: print_(*s),
     '`':lambda i,s: s.push(s.pop(i).split(s.pop())),
@@ -504,7 +504,7 @@ EXTENSIONS = {
     'Y':lambda i, s: exec(str(s.pop(i))),
     '"':lambda i, s: s.push(str(s.pop(i))),
     '[':lambda i, s: s.push(list(s.pop(i))),
-    ']':lambda i, s: s.flatten(),
+    ']':lambda i, s: s.push(flatten(s.pop(i))),
     '.':lambda i, s: s.push(list(s.pop(i)).index(s.pop())),
     '{':lambda i, s: s.push(s, True),
     '}':lambda i, s: repeat(s, s.pop(i)),

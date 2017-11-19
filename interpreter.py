@@ -466,6 +466,7 @@ REGEX = {
     'b':(3, lambda p, s, c: regex.start(p, s, c)),
     'p':(3, lambda p, s, c: regex.split(p, s, c)),
     'o':(3, lambda p, s, c: regex.findor(p, s, c)),
+    'r':(4, lambda p, s, r, c: regex.repeatsub(p, s, r, c)),
     's':(4, lambda p, s, r, c: regex.sub(p, s, r, c)),
     'u':(4, lambda p, s, r, c: regex.unsub(p, s, r, c)),
 

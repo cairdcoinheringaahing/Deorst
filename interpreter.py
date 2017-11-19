@@ -210,7 +210,7 @@ class Stack(list):
             return 1
 
     def init(self):
-        self.sort = True
+        self.sort = False
         self.time = time.time()
         
     def flatten(self):

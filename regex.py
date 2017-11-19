@@ -37,6 +37,11 @@ def group(pattern, string, case):
 def match(pattern, string, case):
     return bool(re.fullmatch(pattern, string, case))
 
+def repeated_sub(pattern, string, replace, case):
+    while re.search(pattern, string, case):
+        string = re.sub(pattern, replace, string, case)
+    return string
+
 def split(pattern, string, case):
     return re.split(pattern, string, case)
 
@@ -44,7 +49,7 @@ def start(pattern, string, case):
     return bool(re.match(pattern, string, case))
 
 def sub(pattern, string, replace, case):
-    return re.sub(pattern, replace, string)
+    return re.sub(pattern, replace, string, case)
 
 def unsub(pattern, string, replace, case):
     matches = re.findall(pattern, string, case)

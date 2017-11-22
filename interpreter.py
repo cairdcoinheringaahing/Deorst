@@ -490,6 +490,8 @@ EXTENSIONS = {
     'D':lambda i, s: s.push(divisors(s.pop(i))),
     'E':lambda i, s: s.push(enumerate(s.pop(i))),
     'F':lambda i, s: s.push(fib(s.pop(i))),
+    'G':lambda i, s: s.push(sum(s.pop(i))),
+    'H':lambda i, s: s.push(sum(s)),
     'I':lambda i, s: s.push(int(s.pop(i))),
     'J':lambda i, s: s.push(''.join(map(str, s.pop(i)))),
     'L':lambda i, s: s.push(str(s.pop(i)).lower()),

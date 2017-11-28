@@ -732,7 +732,17 @@ def interpreter(code, input_file, argv, stack, flags):
         elif line[0] == '#':
             while stack.peek():
                 stack = execute_line(line[1:], stack, inputs)
-                
+        elif line[0] == '$':
+            new = Stack()
+            results = Stack()
+            while stack:
+                new.push(stack.pop())
+                new = execute_line(line[1:], new, inputs)
+                results.push(new.pop())
+            stack.clear()
+            while results:
+                stack.push(results.pop())
+            del results, new
         else:
             stack = execute_line(line, stack, inputs)
 

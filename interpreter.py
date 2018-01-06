@@ -156,7 +156,7 @@ def isprime(val):
     for i in range(2,val):
         if val % i == 0:
             return False
-    return i > 1
+    return val > 1
 
 def length(value):
     try:

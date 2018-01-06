@@ -15,6 +15,10 @@ def flatten(array):
 def contains(pattern, string, case):
     return bool(re.search(pattern, string, case))
 
+def count(pattern, string, case):
+    matches = list(filter(None, re.findall(pattern, string, case)))
+    return len(matches)
+
 def findall(pattern, string, case):
     return re.findall(pattern, string, case)
 

@@ -469,7 +469,7 @@ REGEX = {
     'r':(4, lambda p, s, r, c: regex.repeatsub(p, s, r, c)),
     's':(4, lambda p, s, r, c: regex.sub(p, s, r, c)),
     'u':(4, lambda p, s, r, c: regex.unsub(p, s, r, c)),
-    'n':(3, lambda p, s, c: regex.count(p, s, r, c)),
+    'n':(3, lambda p, s, c: regex.count(p, s, c)),
 
     'C':(3, lambda p, s, c: flatten(regex.contains(p, s, c))),
     'F':(3, lambda p, s, c: flatten(regex.findall(p, s, c))),

@@ -702,15 +702,39 @@ def execute_line(code, stack, inputs):
                 
     return stack
 
-def interpreter(code, input_file, argv, stack, flags):
-    STDIN = list(map(eval_, map(str.strip,open(input_file, 'r').readlines())))
-    argv = list(map(eval_, argv))
+def interpreter(code, input_file, argv, stack, flags, s = True):
+    try:
+        s *= 1
+        STDIN = list(map(eval_, map(str.strip, open(input_file, 'r', encoding='utf-8').readlines())))
+        argv = list(map(eval_, argv))
+    except:
+        STDIN = input_file
+        argv = []
     
     stack.init()
     stack.push(*STDIN)
     stack.push(*argv)
     inputs = STDIN.copy()
     inputs.extend(argv)
+    
+    suite = 0
+    for f in flags:
+        if f.startswith('--suite:'):
+            suite = int(f.split(':')[1])
+            flags.remove(f)
+            break
+    if suite:
+        tests = []
+        last = 0
+        for i in range(1, len(inputs) // suite + 1):
+            i *= suite
+            tests.append(inputs[last:i])
+            last = i
+        results = []
+        for test in tests:
+            results.append(interpreter(code, test, None, Stack(), flags, None))
+        print_('\n'.join(map(str, results)))
+        return
     
     for line in parser(code, '-c' in flags):
         
@@ -747,14 +771,20 @@ def interpreter(code, input_file, argv, stack, flags):
         else:
             stack = execute_line(line, stack, inputs)
 
-    if not open('stdout.txt').read():
+    if s:
+        if not open('stdout.txt').read():
+            if '-s' in flags:
+                print_(stack)
+            else:
+                print_(stack.pop())
+    else:
         if '-s' in flags:
-            print_(stack)
+            return stack
         else:
-            print_(stack.pop())
+            return stack.pop()
 
 def run(program, inputs):
-    open('stdout.txt','w').close()
+    open('stdout.txt','w', encoding='utf-8').close()
     flags = list(filter(lambda a: str(a)[0] == '-', inputs))
     inputs = list(filter(lambda a: a not in flags, inputs))
     interpreter(program.strip(), 'stdin.txt', inputs, Stack(), flags)

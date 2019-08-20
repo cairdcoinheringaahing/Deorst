@@ -337,7 +337,7 @@ COMMANDS = {
     'Z':lambda i,s: s.push(''.join(map(''.join, zip(map(str, s.pop(i)), map(str, s.pop()))))),
 
     '[':lambda i,s: s.push([s.pop(i)]),
-    '\\':lambda i,s: s.push(s.pop(i)//1),
+    '\\':lambda i,s: s.push(1/s.pop(i)),
     ']':lambda i,s: s.flatten(),
     '^':lambda i,s: s.push(s.pop(i) ^ s.pop()),
     '_':lambda i,s: print_(*s),

@@ -121,7 +121,7 @@ def fib_helper(a=[1,1]):
     return a
 
 def fib(n):
-    if instance(n, list):
+    if isinstance(n, list):
         return list(map(fib, n))
     for _ in range(n):a=f()[1]
     return a

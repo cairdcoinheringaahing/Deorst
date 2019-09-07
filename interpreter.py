@@ -1,4 +1,4 @@
-import custom_types, datetime, itertools, math, random, re, regex, time, sys
+import custom_types, datetime, functools, itertools, math, random, re, regex, time, sys
 
 CMD_REGEX = r"Kk|(E[^\d ]([\da-f]+)?)|([?SmFvW][^\d]([\da-f]+)?)|([gr].)|([tU]..)|(o.)|('[^']+')|([^\da-f? ]([\da-f]+)?)"
 NESTED = [1, 3, 9]
@@ -337,7 +337,7 @@ COMMANDS = {
     'Z':lambda i,s: s.push(''.join(map(''.join, zip(map(str, s.pop(i)), map(str, s.pop()))))),
 
     '[':lambda i,s: s.push([s.pop(i)]),
-    '\\':lambda i,s: s.push(1/s.pop(i)),
+    '\\':lambda i,s: s.push(s.pop(i)//1),
     ']':lambda i,s: s.flatten(),
     '^':lambda i,s: s.push(s.pop(i) ^ s.pop()),
     '_':lambda i,s: print_(*s),
@@ -583,13 +583,6 @@ def stack_sort(stack, command):
         key, reverse = SORTS[command], True
     return sorted(stack, key=key, reverse=reverse)
 
-def cond_sort(value):
-    return value[0] not in """tUo'!"#$"""
-
-def sort(line):
-    y = iter(sorted((w for w in line if cond_sort(w)), key=lambda a: a[0]))
-    return [w if not cond_sort(w) else next(y) for w in line]
-
 def parser(code, sort_lines):
     code = code.split('\n')
     for i in range(len(code)):
@@ -599,7 +592,7 @@ def parser(code, sort_lines):
             group[j] = list(filter(lambda a: a[1] and a[0] not in NESTED, enum))
             group[j] = list(map(lambda a: a[1], group[j]))
         if sort_lines:
-            group = sort(group)
+            group = sorted(group)
         code[i] = list(map(lambda a: a[0], group))
     return code
 
@@ -723,6 +716,7 @@ def interpreter(code, input_file, argv, stack, flags, s = True):
             suite = int(f.split(':')[1])
             flags.remove(f)
             break
+        
     if suite:
         tests = []
         last = 0
@@ -736,7 +730,7 @@ def interpreter(code, input_file, argv, stack, flags, s = True):
         print_('\n'.join(map(str, results)))
         return
     
-    for line in parser(code, '-c' in flags):
+    for line in parser(code, '-c' not in flags):
         
         if not line:
             continue
@@ -777,6 +771,7 @@ def interpreter(code, input_file, argv, stack, flags, s = True):
                 print_(stack)
             else:
                 print_(stack.pop())
+                
     else:
         if '-s' in flags:
             return stack
@@ -790,7 +785,6 @@ def run(program, inputs):
     interpreter(program.strip(), 'stdin.txt', inputs, Stack(), flags)
 
 if __name__ == '__main__':
-
     prog = sys.argv[1]
     argv = sys.argv[2:]
     try:
